@@ -1,0 +1,1372 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/2/2022 7:31:41 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MKA-MSI"
+  DTS:CreatorName="MKA-MSI\mk-armah"
+  DTS:DTSID="{F0F873E4-1E50-4E37-BA17-280BC90A2FB2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.948.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{00BC36D4-FB49-4017-A8E1-1B20701ADFDF}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[create_staging_db.sql]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{EA5A2CEF-1049-4E5E-B413-AD6F973099EF}"
+      DTS:ObjectName="create_staging_db.sql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="D:\Users\mk-armah\OneDrive\CODE\SQL\SQLSERVER\CoDE-Data-Migration\SQLScripts\create_staging_db.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[create_staging_db.sql 1]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{DA398A35-361E-4557-99EC-9D68B91645E9}"
+      DTS:ObjectName="create_staging_db.sql 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="D:\Users\mk-armah\OneDrive\CODE\SQL\SQLSERVER\CoDE-Data-Migration\SQLScripts\create_staging_db.sql" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MKA-MSI\MKASERVER]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4193BE82-A293-4838-950B-7E3C901EADB3}"
+      DTS:ObjectName="MKA-MSI\MKASERVER">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=MKA-MSI\MKASERVER;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package-{4193BE82-A293-4838-950B-7E3C901EADB3}MKA-MSI\MKASERVER;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MKA-MSI\MKASERVER.CoDE_Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9A510C2B-B96B-4CA3-99B8-822A1CBF2C37}"
+      DTS:ObjectName="MKA-MSI\MKASERVER.CoDE_Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=MKA-MSI\MKASERVER;Initial Catalog=CoDE_Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package-{9A510C2B-B96B-4CA3-99B8-822A1CBF2C37}MKA-MSI\MKASERVER.CoDE_Staging;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7A11D2FF-1A6D-4DF9-ABCD-9E94424CC02A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="vFirstSemester">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F84256BC-8E91-4350-AA92-484873DB1A5B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="vSecondSemester">
+      <DTS:VariableValue
+        DTS:DataType="3">2</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:LoggingOptions
+    DTS:FilterKind="0"
+    DTS:LoggingMode="2" />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Staging Tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9ED70D7D-9629-4DE9-A4A7-D29FCC359B5A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Staging Tables"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9A510C2B-B96B-4CA3-99B8-822A1CBF2C37}"
+          SQLTask:SqlStmtSourceType="FileConnection"
+          SQLTask:SqlStatementSource="create_staging_db.sql" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Source to Staging"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Read data from excel, transform it and load it into staging"
+      DTS:DTSID="{46D105FC-135C-4733-9121-BFB969415F2E}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Source to Staging"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="D:\Users\mk-armah\OneDrive\CODE\SQL\SQLSERVER\CoDE-Data-Migration\PythonScripts\venv\Scripts\python.exe"
+          Arguments="source_to_staging.py"
+          WorkingDirectory="D:\Users\mk-armah\OneDrive\CODE\SQL\SQLSERVER\CoDE-Data-Migration\PythonScripts" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Staging to EDW"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{E77AEC10-E192-4BAF-A0B7-817C9C9EE8E7}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Staging to EDW">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Staging to EDW\Count First Semester ICs"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count First Semester ICs">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::vFirstSemester</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Staging to EDW\Count First Semester ICs.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Staging to EDW\Count First Semester ICs.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Staging to EDW\Count First Semester ICs.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Staging to EDW\Count Second Semester ICs"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count Second Semester ICs">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::vSecondSemester</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Staging to EDW\Count Second Semester ICs.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Staging to EDW\Count Second Semester ICs.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Staging to EDW\Count Second Semester ICs.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Staging to EDW\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Staging to EDW\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Staging to EDW\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Staging to EDW\Derived Column.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Staging to EDW\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Staging to EDW\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Staging to EDW\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Staging to EDW\First Semester ICs"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="First Semester ICs"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">EXECUTE standbydbo.GET_SEM_ICs ?</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"@Semester:Input",{F84256BC-8E91-4350-AA92-484873DB1A5B};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Staging to EDW\First Semester ICs.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MKA-MSI\MKASERVER.CoDE_Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[MKA-MSI\MKASERVER.CoDE_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[RegistrationNumber]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[RegistrationNumber]"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[RegistrationNumber]"
+                      name="RegistrationNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[FullName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[FullName]"
+                      length="100"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[FullName]"
+                      name="FullName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[CourseCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[CourseCode]"
+                      length="10"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[CourseCode]"
+                      name="CourseCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[CourseTitle]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[CourseTitle]"
+                      length="100"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[CourseTitle]"
+                      name="CourseTitle"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[Session]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[Session]"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[Session]"
+                      name="Session"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[StudyCentre]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[StudyCentre]"
+                      length="100"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[StudyCentre]"
+                      name="StudyCentre"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[Level]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[Level]"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[Level]"
+                      name="Level"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[DegreeTitle]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[DegreeTitle]"
+                      length="100"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[DegreeTitle]"
+                      name="DegreeTitle"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[RegistrationNumber]"
+                      dataType="i4"
+                      name="RegistrationNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[FullName]"
+                      dataType="wstr"
+                      length="100"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[CourseCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="CourseCode" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[CourseTitle]"
+                      dataType="wstr"
+                      length="100"
+                      name="CourseTitle" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[Session]"
+                      dataType="i4"
+                      name="Session" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[StudyCentre]"
+                      dataType="wstr"
+                      length="100"
+                      name="StudyCentre" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[Level]"
+                      dataType="i4"
+                      name="Level" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[DegreeTitle]"
+                      dataType="wstr"
+                      length="100"
+                      name="DegreeTitle" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[StudyCentre]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[StudyCentre]"
+                      name="StudyCentre" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[RegistrationNumber]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[RegistrationNumber]"
+                      name="RegistrationNumber" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[FullName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[FullName]"
+                      name="FullName" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[Level]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[Level]"
+                      name="Level" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[DegreeTitle]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[DegreeTitle]"
+                      name="DegreeTitle" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[CourseCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[CourseCode]"
+                      name="CourseCode" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[CourseTitle]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[CourseTitle]"
+                      name="CourseTitle" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[Session]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[Session]"
+                      name="Session" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Staging to EDW\Second Semester ICs"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Second Semester ICs"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">EXECUTE standbydbo.GET_SEM_ICs ?</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"@Semester:Input",{F84256BC-8E91-4350-AA92-484873DB1A5B};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Staging to EDW\Second Semester ICs.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MKA-MSI\MKASERVER.CoDE_Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[MKA-MSI\MKASERVER.CoDE_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[RegistrationNumber]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[RegistrationNumber]"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[RegistrationNumber]"
+                      name="RegistrationNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[FullName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[FullName]"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[FullName]"
+                      name="FullName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[CourseCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[CourseCode]"
+                      length="10"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[CourseCode]"
+                      name="CourseCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[CourseTitle]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[CourseTitle]"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[CourseTitle]"
+                      name="CourseTitle"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[Session]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[Session]"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[Session]"
+                      name="Session"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[StudyCentre]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[StudyCentre]"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[StudyCentre]"
+                      name="StudyCentre"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[Level]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[Level]"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[Level]"
+                      name="Level"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[DegreeTitle]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[DegreeTitle]"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[DegreeTitle]"
+                      name="DegreeTitle"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[RegistrationNumber]"
+                      dataType="i4"
+                      name="RegistrationNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[FullName]"
+                      dataType="wstr"
+                      length="100"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[CourseCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="CourseCode" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[CourseTitle]"
+                      dataType="wstr"
+                      length="100"
+                      name="CourseTitle" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[Session]"
+                      dataType="i4"
+                      name="Session" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[StudyCentre]"
+                      dataType="wstr"
+                      length="100"
+                      name="StudyCentre" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[Level]"
+                      dataType="i4"
+                      name="Level" />
+                    <externalMetadataColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].ExternalColumns[DegreeTitle]"
+                      dataType="wstr"
+                      length="100"
+                      name="DegreeTitle" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[StudyCentre]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[StudyCentre]"
+                      name="StudyCentre" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[RegistrationNumber]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[RegistrationNumber]"
+                      name="RegistrationNumber" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[FullName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[FullName]"
+                      name="FullName" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[Level]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[Level]"
+                      name="Level" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[DegreeTitle]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[DegreeTitle]"
+                      name="DegreeTitle" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[CourseCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[CourseCode]"
+                      name="CourseCode" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[CourseTitle]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[CourseTitle]"
+                      name="CourseTitle" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[Session]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[Session]"
+                      name="Session" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Staging to EDW\Union All"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Union All"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\Staging to EDW\Union All.Inputs[Union All Input 1]"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 1].Columns[CentreName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CentreName"
+                      lineageId="Package\Staging to EDW\152:invalid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CentreName]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 1].Columns[RegistrationNumber]"
+                      cachedDataType="i4"
+                      cachedName="RegistrationNumber"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[RegistrationNumber]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[RegistrationNumber]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 1].Columns[FullName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="FullName"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[FullName]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[FullName]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 1].Columns[Level]"
+                      cachedDataType="i4"
+                      cachedName="Level"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[Level]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[LEVEL]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 1].Columns[LongName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="LongName"
+                      lineageId="Package\Staging to EDW\153:invalid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[LongName]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 1].Columns[CourseCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="CourseCode"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[CourseCode]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CourseCode]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 1].Columns[CourseTitle]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CourseTitle"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[CourseTitle]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CourseTitle]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 1].Columns[Session]"
+                      cachedDataType="i4"
+                      cachedName="Session"
+                      lineageId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output].Columns[Session]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[Session]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Staging to EDW\Union All.Inputs[Union All Input 2]"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 2].Columns[CentreName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CentreName"
+                      lineageId="Package\Staging to EDW\154:invalid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CentreName]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 2].Columns[RegistrationNumber]"
+                      cachedDataType="i4"
+                      cachedName="RegistrationNumber"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[RegistrationNumber]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[RegistrationNumber]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 2].Columns[FullName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="FullName"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[FullName]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[FullName]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 2].Columns[Level]"
+                      cachedDataType="i4"
+                      cachedName="Level"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[Level]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[LEVEL]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 2].Columns[LongName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="LongName"
+                      lineageId="Package\Staging to EDW\155:invalid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[LongName]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 2].Columns[CourseCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="CourseCode"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[CourseCode]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CourseCode]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 2].Columns[CourseTitle]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CourseTitle"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[CourseTitle]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CourseTitle]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Staging to EDW\Union All.Inputs[Union All Input 2].Columns[Session]"
+                      cachedDataType="i4"
+                      cachedName="Session"
+                      lineageId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output].Columns[Session]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[Session]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Staging to EDW\Union All.Inputs[Union All Input 3]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 3">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Staging to EDW\Union All.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CentreName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CentreName]"
+                      name="CentreName" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[RegistrationNumber]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[RegistrationNumber]"
+                      name="RegistrationNumber" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[FullName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[FullName]"
+                      name="FullName" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[LEVEL]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[LEVEL]"
+                      name="LEVEL" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[LongName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[LongName]"
+                      name="LongName" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CourseCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CourseCode]"
+                      name="CourseCode" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CourseTitle]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[CourseTitle]"
+                      name="CourseTitle" />
+                    <outputColumn
+                      refId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[Session]"
+                      dataType="i4"
+                      lineageId="Package\Staging to EDW\Union All.Outputs[Union All Output 1].Columns[Session]"
+                      name="Session" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Staging to EDW.Paths[OLE DB Source Output]"
+              endId="Package\Staging to EDW\Count Second Semester ICs.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\Staging to EDW\Second Semester ICs.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Staging to EDW.Paths[OLE DB Source Output1]"
+              endId="Package\Staging to EDW\Count First Semester ICs.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\Staging to EDW\First Semester ICs.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Staging to EDW.Paths[Row Count Output 1]"
+              endId="Package\Staging to EDW\Union All.Inputs[Union All Input 1]"
+              name="Row Count Output 1"
+              startId="Package\Staging to EDW\Count First Semester ICs.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Staging to EDW.Paths[Row Count Output 11]"
+              endId="Package\Staging to EDW\Union All.Inputs[Union All Input 2]"
+              name="Row Count Output 1"
+              startId="Package\Staging to EDW\Count Second Semester ICs.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Staging to EDW.Paths[Union All Output 1]"
+              endId="Package\Staging to EDW\Derived Column.Inputs[Derived Column Input]"
+              name="Union All Output 1"
+              startId="Package\Staging to EDW\Union All.Outputs[Union All Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{E016F132-5147-4C9A-9CB4-78FB0E1B6C32}"
+      DTS:From="Package\Create Staging Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Source to Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{42EA0320-F433-48B9-9B23-0224A14D1A32}"
+      DTS:From="Package\Source to Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Staging to EDW" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="181.6,41.6"
+          Id="Package\Create Staging Tables"
+          TopLeft="419.285721426107,61.9411773392899" />
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\Source to Staging"
+          TopLeft="416.428578520308,180.470590766326" />
+        <NodeLayout
+          Size="152.8,41.6"
+          Id="Package\Staging to EDW"
+          TopLeft="429.071435784807,312.147063124139" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="508.057149973207,103.54117733929">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,76.9294134270361"
+              Start="0,0"
+              End="0,69.4294134270361">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,69.4294134270361" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="505.750007152557,222.070590766326">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,90.076472357813"
+              Start="0,0"
+              End="0,82.576472357813">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,82.576472357813" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Staging to EDW">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:s="clr-namespace:System;assembly=mscorlib">
+        <NodeLayout
+          Size="152.8,41.6"
+          Id="Package\Staging to EDW\Derived Column"
+          TopLeft="414.545454545455,430.909090909091" />
+        <EdgeLayout
+          Id="Package\Staging to EDW.Paths[Union All Output 1]"
+          TopLeft="489.072727272727,351.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79.7090909090908"
+              Start="0,0"
+              End="0,72.2090909090908">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.2090909090908" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="164,41.6"
+          Id="Package\Staging to EDW\First Semester ICs"
+          TopLeft="20.0454545454546,6.40909090909092" />
+        <NodeLayout
+          Size="178.4,41.6"
+          Id="Package\Staging to EDW\Second Semester ICs"
+          TopLeft="268.227272727273,5.5" />
+        <NodeLayout
+          Size="209.6,41.6"
+          Id="Package\Staging to EDW\Count Second Semester ICs"
+          TopLeft="251.863636363636,140.045454545455" />
+        <NodeLayout
+          Size="195.2,41.6"
+          Id="Package\Staging to EDW\Count First Semester ICs"
+          TopLeft="5.5,140.736363636364" />
+        <EdgeLayout
+          Id="Package\Staging to EDW.Paths[OLE DB Source Output1]"
+          TopLeft="102.572727272727,48.0090909090909">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,92.7272727272728"
+              Start="0,0"
+              End="0,85.2272727272728">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,85.2272727272728" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="120,41.6"
+          Id="Package\Staging to EDW\Union All"
+          TopLeft="171.863636363636,260.045454545455" />
+        <EdgeLayout
+          Id="Package\Staging to EDW.Paths[Row Count Output 1]"
+          TopLeft="103.1,182.336363636364">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="110.09696969697,77.7090909090908"
+              Start="0,0"
+              End="110.09696969697,70.2090909090908">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.011961722488" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,42.011961722488"
+                    Point2="0,46.011961722488"
+                    Point3="4,46.011961722488" />
+                  <mssgle:LineSegment
+                    End="106.09696969697,46.011961722488" />
+                  <mssgle:CubicBezierSegment
+                    Point1="106.09696969697,46.011961722488"
+                    Point2="110.09696969697,46.011961722488"
+                    Point3="110.09696969697,50.011961722488" />
+                  <mssgle:LineSegment
+                    End="110.09696969697,70.2090909090908" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="47.0484848484848,51.011961722488,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Staging to EDW.Paths[OLE DB Source Output]"
+          TopLeft="357.045454545455,47.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,92.9454545454545"
+              Start="0,0"
+              End="0,85.4454545454545">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,85.4454545454545" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Staging to EDW.Paths[Row Count Output 11]"
+          TopLeft="356.663636363636,181.645454545454">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-106.133333333333,78.4000000000001"
+              Start="0,0"
+              End="-106.133333333333,70.9000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.421052631579" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,42.421052631579"
+                    Point2="0,46.421052631579"
+                    Point3="-4,46.421052631579" />
+                  <mssgle:LineSegment
+                    End="-102.133333333333,46.421052631579" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-102.133333333333,46.421052631579"
+                    Point2="-106.133333333333,46.421052631579"
+                    Point3="-106.133333333333,50.421052631579" />
+                  <mssgle:LineSegment
+                    End="-106.133333333333,70.9000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-61.0666666666667,51.421052631579,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <GroupLayout
+          Text="Staging Area Operations"
+          ParentId="Package\Staging to EDW"
+          HeaderHeight="47.2"
+          IsExpanded="True"
+          PanelSize="467.2,354.4"
+          Size="467.2,401.6"
+          Id="0430c14d-d3cb-468f-b317-a0499df559d1"
+          TopLeft="255.409090909091,2.77272727272739">
+          <GroupLayout.ChildrenIds>
+            <s:String>Package\Staging to EDW\First Semester ICs</s:String>
+            <s:String>Package\Staging to EDW\Second Semester ICs</s:String>
+            <s:String>Package\Staging to EDW\Count Second Semester ICs</s:String>
+            <s:String>Package\Staging to EDW\Count First Semester ICs</s:String>
+            <s:String>Package\Staging to EDW.Paths[OLE DB Source Output1]</s:String>
+            <s:String>Package\Staging to EDW\Union All</s:String>
+            <s:String>Package\Staging to EDW.Paths[Row Count Output 1]</s:String>
+            <s:String>Package\Staging to EDW.Paths[OLE DB Source Output]</s:String>
+            <s:String>Package\Staging to EDW.Paths[Row Count Output 11]</s:String>
+          </GroupLayout.ChildrenIds>
+        </GroupLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Staging to EDW\First Semester ICs">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Staging to EDW\Second Semester ICs">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

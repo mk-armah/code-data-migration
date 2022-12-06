@@ -1,0 +1,76 @@
+--- Provision Staging Area Database
+
+BEGIN TRY
+	IF DB_ID('CoDE_Staging') IS NULL
+	BEGIN
+		CREATE DATABASE CoDE_Staging
+		EXEC('CREATE SCHEMA [standby]')
+	END
+
+	ELSE IF SCHEMA_ID('standby') IS NULL
+			BEGIN
+				USE [CoDE_Staging];
+				EXEC ('CREATE SCHEMA [standby]')
+			END
+
+	PRINT 'CONTROL DATABASE -- ALL SET'
+
+END TRY
+BEGIN CATCH
+	SELECT ERROR_NUMBER()
+	SELECT ERROR_MESSAGE() 
+END CATCH
+
+
+
+---Provision Control Database to store logs,errors and etl configs
+
+BEGIN TRY
+	IF DB_ID('CoDE_Control') IS NULL
+	BEGIN
+		CREATE DATABASE CoDE_Control
+		EXEC('CREATE SCHEMA [logs]')
+	END
+	ELSE IF SCHEMA_ID('logs') IS NULL
+		BEGIN
+			EXEC ('CREATE SCHEMA CoDE_Control.[logs]')
+		END
+
+	PRINT 'CONTROL DATABASE -- ALL SET'
+
+END TRY
+
+BEGIN CATCH
+
+	SELECT ERROR_NUMBER()
+	SELECT ERROR_MESSAGE() 
+
+END CATCH
+
+
+
+---Provision Data Warehouse Database 
+
+BEGIN TRY
+	IF DB_ID('CoDE_DW') IS NULL
+	BEGIN
+		CREATE DATABASE CoDE_Staging
+		EXEC('CREATE SCHEMA [ic]')
+	END
+	ELSE IF SCHEMA_ID('ic') IS NULL
+		BEGIN
+			EXEC ('CREATE SCHEMA CoDE_DW.[ic]')
+		END
+
+	PRINT 'EDW DATABASE -- ALL SET'
+
+END TRY
+
+BEGIN CATCH
+	SELECT ERROR_NUMBER()
+	SELECT ERROR_MESSAGE() 
+END CATCH
+
+
+
+
