@@ -1,5 +1,6 @@
-# code-data-migration
-ETL from an Excel Data source to SQL Server Database for Visualization and Reporting
+# Migrating Data Of Students with Incomplete Test Scores to EDW for Analysis and Reporting
+### Owner/Client
+University of Cape Coast, College of Distance Education (CoDE)
 ### Task and Deliverables:
 <ul>
 <li>
@@ -28,7 +29,7 @@ ETL from an Excel Data source to SQL Server Database for Visualization and Repor
  </li>
 
 <li>
-  Designed the conceptual, logical and physical model of a Dimensional Data Warehouse (Star Schema)
+  Designed the <a href = 'https://lucid.app/lucidchart/e2966a61-9364-4538-bc8b-b3974b0c4b77/edit?viewport_loc=-106%2C-13%2C2437%2C1157%2C0_0&invitationId=inv_ce5445a7-9c39-48d0-8e86-6e1281f8b53f'>conceptual</a>, logical and physical model of a Dimensional Data Warehouse (Star Schema)
 </li>
   <li>
   Extracted, transformed, and loaded (ETL) data from Excel into Staging Area and finally into Data Warehouse
@@ -61,12 +62,6 @@ ETL from an Excel Data source to SQL Server Database for Visualization and Repor
  <li>
    Visual Studio Code
  </li>
- <li>
-   Azure Cloud Computing Services
- </li>
- <li>
-   Azure Data Factory
-  </li>
  <li>
    Spreedsheet apps | Google Sheet, Microsoft Excel
   </li>
