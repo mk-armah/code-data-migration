@@ -1,7 +1,7 @@
 # Migrating Data Of Students with Incomplete Test Scores to EDW for Analysis and Reporting
 ### Owner/Client
 University of Cape Coast, College of Distance Education (CoDE)
-### Task and Deliverables:
+### Task and Requirements:
 <ul>
 <li>
   Deliver Excel sheets containing data of student's with ICs (Incomplete Scores) for all the 77 study centers in Ghana.<br/> 
